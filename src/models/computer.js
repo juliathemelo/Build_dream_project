@@ -6,6 +6,11 @@ const computerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    motherboard: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'motherboard'
+    },
     processor: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

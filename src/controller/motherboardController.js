@@ -24,6 +24,34 @@ const getCompatible = async (req, res) => {
     
 }
 
+const getMinPrice = async (req, res) => {
+    const motherboard = await Motherboard.find()
+
+    if (motherboard.length == 0) {
+        res.status(204).send({ message: "No motherboard found"})
+    }
+
+    const minPrice = motherboard.sort( function (a,b) {
+        return (a.preco > b.preco) ? 1 : ((b.preco > a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(minPrice)
+}
+
+const getMaxPrice = async (req, res) => {
+    const motherboard = await Motherboard.find()
+
+    if (motherboard.length == 0) {
+        res.status(204).send({ message: "No motherboard found"})
+    }
+
+    const maxPrice = motherboard.sort( function (a,b) {
+        return (a.preco < b.preco) ? 1 : ((b.preco < a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(maxPrice)
+}
+
 const createMotherboard = async (req, res) => {
     const motherboard = new Motherboard({
         _id: new mongoose.Types.ObjectId(),
@@ -92,6 +120,8 @@ const deleteMotherboard = (req, res) => {
 
 module.exports = {
     getAllMotherboard,
+    getMinPrice,
+    getMaxPrice,
     createMotherboard,
     updateMotherboard,
     deleteMotherboard,

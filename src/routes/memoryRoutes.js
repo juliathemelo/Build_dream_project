@@ -5,6 +5,10 @@ const router = express.Router()
 
 router.get('/', controller.getAllMemory)
 
+router.get('/filter/min', controller.getMinPrice)
+
+router.get('/filter/max', controller.getMaxPrice)
+
 router.post('/', controller.createMemory)
 
 router.put('/:id', controller.updateMemory)

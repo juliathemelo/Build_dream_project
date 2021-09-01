@@ -7,6 +7,10 @@ router.get('/', controller.getAllMotherboard)
 
 router.get('/:id', controller.getCompatible)
 
+router.get('/filter/min', controller.getMinPrice)
+
+router.get('/filter/max', controller.getMaxPrice)
+
 router.post('/', controller.createMotherboard)
 
 router.put('/:id', controller.updateMotherboard)

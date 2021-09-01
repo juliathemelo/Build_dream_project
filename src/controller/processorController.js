@@ -11,6 +11,35 @@ const getAllProcessor = async (req, res) => {
     res.status(200).send(processor)
 }
 
+const getMinPrice = async (req, res) => {
+    const processor = await Processor.find()
+
+    if (processor.length == 0) {
+        res.status(204).send({ message: "No processor found"})
+    }
+
+    const minPrice = processor.sort( function (a,b) {
+        return (a.preco > b.preco) ? 1 : ((b.preco > a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(minPrice)
+}
+
+const getMaxPrice = async (req, res) => {
+    const processor = await Processor.find()
+
+    if (processor.length == 0) {
+        res.status(204).send({ message: "No processor found"})
+    }
+
+    const maxPrice = processor.sort( function (a,b) {
+        return (a.preco < b.preco) ? 1 : ((b.preco < a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(maxPrice)
+}
+
+
 const createProcessor = async (req, res) => {
     const processor = new Processor({
         _id: new mongoose.Types.ObjectId(),
@@ -78,6 +107,8 @@ const deleteProcessor = (req, res) => {
 
 module.exports = {
     getAllProcessor,
+    getMaxPrice,
+    getMinPrice,
     createProcessor,
     updateProcessor,
     deleteProcessor

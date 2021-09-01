@@ -11,6 +11,35 @@ const getAllPeripheral = async (req, res) => {
     res.status(200).send(peripheral)
 }
 
+const getMinPrice = async (req, res) => {
+    const peripheral = await Peripheral.find()
+
+    if (peripheral.length == 0) {
+        res.status(204).send({ message: "No peripheral found"})
+    }
+
+    const minPrice = peripheral.sort( function (a,b) {
+        return (a.preco > b.preco) ? 1 : ((b.preco > a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(minPrice)
+}
+
+const getMaxPrice = async (req, res) => {
+    const peripheral = await Peripheral.find()
+
+    if (peripheral.length == 0) {
+        res.status(204).send({ message: "No peripheral found"})
+    }
+
+    const maxPrice = peripheral.sort( function (a,b) {
+        return (a.preco < b.preco) ? 1 : ((b.preco < a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(maxPrice)
+}
+
+
 const createPeripheral = async (req, res) => {
     const peripheral = new Peripheral({
         _id: new mongoose.Types.ObjectId(),
@@ -38,11 +67,11 @@ const createPeripheral = async (req, res) => {
 
 const updatePeripheral = async (req, res) => {
     const requestId = req.params.id
-    Peripheral.findOne({ _id: requestId }, function (err, memoryFound) {
+    Peripheral.findOne({ _id: requestId }, function (err, peripheralFound) {
         if (err) {
             res.status(500).send({ message: err.message })
         } else {
-            if (memoryFound) {
+            if (peripheralFound) {
                 Peripheral.updateOne({ _id: requestId }, {$set: req.body }, function (err) {
                     if (err) {
                         res.status(500).send({ message: err.message })
@@ -59,11 +88,11 @@ const updatePeripheral = async (req, res) => {
 
 const deletePeripheral = (req, res) => {
     const requestId = req.params.id;
-    Peripheral.findOne({ _id: requestId }, function (err, memoryFound) {
+    Peripheral.findOne({ _id: requestId }, function (err, peripheralFound) {
         if (err) {
             res.status(500).send({ message: err.message })
         } else {
-            if (memoryFound) {
+            if (peripheralFound) {
                 Peripheral.deleteOne({ _id: requestId }, function (err) {
                     if (err) {
                         res.status(500).send({ message: err.message })
@@ -80,6 +109,8 @@ const deletePeripheral = (req, res) => {
 
 module.exports = {
     getAllPeripheral,
+    getMinPrice,
+    getMaxPrice,
     createPeripheral,
     updatePeripheral,
     deletePeripheral

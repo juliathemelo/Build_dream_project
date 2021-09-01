@@ -5,6 +5,10 @@ const router = express.Router()
 
 router.get('/', controller.getAllPeripheral)
 
+router.get('/filter/min', controller.getMinPrice)
+
+router.get('/filter/max', controller.getMaxPrice)
+
 router.post('/', controller.createPeripheral)
 
 router.put('/:id', controller.updatePeripheral)

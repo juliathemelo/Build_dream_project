@@ -11,6 +11,34 @@ const getAllMemory = async (req, res) => {
     res.status(200).send(memory)
 }
 
+const getMinPrice = async (req, res) => {
+    const memory = await Memory.find()
+
+    if (memory.length == 0) {
+        res.status(204).send({ message: "No memory found"})
+    }
+
+    const minPrice = memory.sort( function (a,b) {
+        return (a.preco > b.preco) ? 1 : ((b.preco > a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(minPrice)
+}
+
+const getMaxPrice = async (req, res) => {
+    const memory = await Memory.find()
+
+    if (memory.length == 0) {
+        res.status(204).send({ message: "No memory found"})
+    }
+
+    const maxPrice = memory.sort( function (a,b) {
+        return (a.preco < b.preco) ? 1 : ((b.preco < a.preco) ? -1 : 0);
+    })
+
+    res.status(200).send(maxPrice)
+}
+
 const createMemory = async (req, res) => {
     const memory = new Memory({
         _id: new mongoose.Types.ObjectId(),
@@ -78,6 +106,8 @@ const deleteMemory = (req, res) => {
 
 module.exports = {
     getAllMemory,
+    getMinPrice,
+    getMaxPrice,
     createMemory,
     updateMemory,
     deleteMemory
