@@ -14,10 +14,6 @@ const motherboardSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    usb: {
-        type: Boolean,
-        required: true
-    },
     preco: {
         type: Number,
         required: false

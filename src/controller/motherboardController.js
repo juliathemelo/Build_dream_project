@@ -58,7 +58,6 @@ const createMotherboard = async (req, res) => {
         marca: req.body.marca,
         modelo: req.body.modelo,
         compativel: req.body.compativel,
-        usb: req.body.usb,
         preco: req.body.preco
     })
 
