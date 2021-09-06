@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const db = require('./data/database')
+const cors = require('cors')
 const processorsRouter = require('./routes/processorRoutes')
 const memoryRouter = require('./routes/memoryRoutes')
 const motherboardRouter = require('./routes/motherboardRoutes')
