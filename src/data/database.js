@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const MONGO_URL = process.env.MONGODB_URI
+const MONGO_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/buildream'
 
 const connect = () => {
     mongoose.connect(MONGO_URL , {
