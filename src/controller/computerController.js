@@ -66,18 +66,17 @@ const createComputer = async (req, res) => {
 const updateComputer = async (req, res) => {
     const requestId = req.params.id
 
-    const processorPrice = await Processor.findOne({ _id: req.body.processor })
-    const memoryPrice = await Memory.findOne({ _id: req.body.memory })
-    const peripheralPrice = await Peripheral.findOne({ _id: req.body.peripheral })
-    const motherboardPrice = await Motherboard.findOne({ _id: req.body.motherboard })
-
-    const totalPrice = (processorPrice.preco + memoryPrice.preco + peripheralPrice.preco + motherboardPrice.preco)
-
     Computer.findOne({ _id: requestId }, function (err, computerFound) {
         if (err) {
             res.status(500).send({ message: err.message })
         } else {
             if (computerFound) {
+                const processorPrice = await Processor.findOne({ _id: req.body.processor })
+                const memoryPrice = await Memory.findOne({ _id: req.body.memory })
+                const peripheralPrice = await Peripheral.findOne({ _id: req.body.peripheral })
+                const motherboardPrice = await Motherboard.findOne({ _id: req.body.motherboard })
+
+                const totalPrice = (processorPrice.preco + memoryPrice.preco + peripheralPrice.preco + motherboardPrice.preco)
                 Computer.updateOne({ _id: requestId, total: totalPrice}, {$set: req.body }, function (err) {
                     if (err) {
                         res.status(500).send({ message: err.message })
