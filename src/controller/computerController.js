@@ -78,7 +78,7 @@ const updateComputer = async (req, res) => {
             res.status(500).send({ message: err.message })
         } else {
             if (computerFound) {
-                Computer.updateOne({ _id: requestId, total: totalPrice}, {$set: req.body }, function (err) {
+                Computer.updateOne({ _id: requestId}, {$set: req.body, total: totalPrice}, function (err) {
                     if (err) {
                         res.status(500).send({ message: err.message })
                     } else {
