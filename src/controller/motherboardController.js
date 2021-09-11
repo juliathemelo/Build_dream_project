@@ -1,5 +1,6 @@
 const Motherboard = require('../models/motherboard')
 const Processor = require('../models/processor')
+const Peripheral = require('../models/peripheral')
 const mongoose = require('mongoose')
 
 const getAllMotherboard = async (req, res) => {
@@ -16,9 +17,17 @@ const getCompatible = async (req, res) => {
     const requestId = req.params.id
     const compatible = await Motherboard.findOne({ _id: requestId })
     const processor = await Processor.find({ marca: compatible.compativel })
-    console.log(processor.length)
     if (processor.length != 0) {
         res.status(200).send({'Processadores Compatíveis': processor})
+    }
+    res.send({'not found': 'Does not have a compatible processor'})
+    
+}
+
+const getUSBperipheral = async (req, res) => {
+    const peripheral = await Peripheral.find({ usb: true })
+    if (peripheral != false) {
+        res.status(200).send({'Perifericos Compatíveis': peripheral})
     }
     res.send({'not found': 'Does not have a compatible processor'})
     
@@ -124,5 +133,6 @@ module.exports = {
     createMotherboard,
     updateMotherboard,
     deleteMotherboard,
-    getCompatible
+    getCompatible,
+    getUSBperipheral
 }

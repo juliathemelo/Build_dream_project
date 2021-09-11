@@ -7,6 +7,8 @@ router.get('/', controller.getAllMotherboard)
 
 router.get('/:id', controller.getCompatible)
 
+router.get('/usb', controller.getUSBperipheral)
+
 router.get('/filter/min', controller.getMinPrice)
 
 router.get('/filter/max', controller.getMaxPrice)
