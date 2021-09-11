@@ -26,7 +26,8 @@ const getCompatible = async (req, res) => {
 
 const getUSBperipheral = async (req, res) => {
     const peripheral = await Peripheral.find({ usb: true })
-    if (peripheral != false) {
+    console.log(peripheral)
+    if (peripheral) {
         res.status(200).send({'Perifericos Compatíveis': peripheral})
     }
     res.send({'not found': 'Does not have a compatible processor'})
